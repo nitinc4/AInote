@@ -57,8 +57,23 @@ serve(async (req) => {
       })
     })
 
+    if (!response.ok) {
+      const errorData = await response.json()
+      console.error('DeepSeek API error:', errorData)
+      throw new Error('Failed to get summary from DeepSeek API')
+    }
+
     const data = await response.json()
+    
+    if (!data || !data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error('Invalid response format from DeepSeek API')
+    }
+
     const summary = data.choices[0].message.content.trim()
+
+    if (!summary) {
+      throw new Error('Empty summary received from DeepSeek API')
+    }
 
     return new Response(
       JSON.stringify({ summary }),
@@ -71,7 +86,10 @@ serve(async (req) => {
     console.error('Error in summarize function:', error)
     
     return new Response(
-      JSON.stringify({ error: 'Failed to summarize content' }),
+      JSON.stringify({ 
+        error: 'Failed to summarize content',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      }),
       {
         status: 500,
         headers: corsHeaders,
