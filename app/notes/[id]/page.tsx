@@ -70,18 +70,17 @@ export default function NotePage() {
       })
       return
     }
-    
+  
     setIsSummarizing(true)
-    
+  
     try {
       const summary = await summarize.mutateAsync(note.content)
-      
-      // Update the note with the new summary
+  
       await updateNote.mutateAsync({
         id: noteId,
         summary
       })
-      
+  
       toast({
         title: 'Summary generated',
         description: 'AI summary has been created for your note.',
@@ -89,7 +88,7 @@ export default function NotePage() {
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to generate summary. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to generate summary.',
         variant: 'destructive',
       })
     } finally {
