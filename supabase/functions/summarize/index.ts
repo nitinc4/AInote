@@ -5,6 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Content-Type': 'application/json'
 }
 
 interface SummarizeRequest {
@@ -28,13 +29,12 @@ serve(async (req) => {
         JSON.stringify({ error: 'Content is required' }),
         {
           status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          headers: corsHeaders,
         }
       )
     }
 
     // Using DeepSeek API for summarization
-    // Note: Replace with your actual API endpoint and key
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -64,7 +64,7 @@ serve(async (req) => {
       JSON.stringify({ summary }),
       {
         status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: corsHeaders,
       }
     )
   } catch (error) {
@@ -74,7 +74,7 @@ serve(async (req) => {
       JSON.stringify({ error: 'Failed to summarize content' }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        headers: corsHeaders,
       }
     )
   }
