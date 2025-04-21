@@ -9,7 +9,7 @@ type AuthContextType = {
   user: User | null
   loading: boolean
   signUp: (email: string, password: string) => Promise<void>
-  signIn: (email: string, password: string) => Promise<void>
+  signIn: (email: string, password: string) => Promise<{ error?: { message: string, code?: string } }>
   signInWithGoogle: () => Promise<void>
   signOut: () => Promise<void>
 }
@@ -63,11 +63,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         email,
         password,
       })
-      if (error) throw error
-      router.push('/dashboard')
-    } catch (error) {
-      console.error('Error signing in:', error)
-      throw error
+      if (error) {
+        console.error('Error signing in:', error)
+        return { error: { 
+          message: error.message,
+          code: error.code 
+        }}
+      }
+      return {}
     } finally {
       setLoading(false)
     }

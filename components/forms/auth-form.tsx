@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Loader2 } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -53,7 +54,23 @@ export function AuthForm({ type }: AuthFormProps) {
 
     try {
       if (type === 'login') {
-        await signIn(data.email, data.password)
+        const { error } = await signIn(data.email, data.password)
+        
+        if (error) {
+          let description = 'Something went wrong. Please try again.'
+          
+          if (error.code === 'invalid_credentials') {
+            description = 'Invalid email or password. Please check your credentials or sign up if you don\'t have an account.'
+          }
+          
+          toast({
+            title: 'Error',
+            description,
+            variant: 'destructive',
+          })
+          return
+        }
+        
         toast({
           title: 'Success',
           description: 'You have been logged in',
@@ -128,6 +145,28 @@ export function AuthForm({ type }: AuthFormProps) {
           </Button>
         </form>
       </Form>
+
+      {type === 'login' && (
+        <div className="text-sm text-center">
+          <p className="text-muted-foreground">
+            Don't have an account?{' '}
+            <Link href="/auth/signup" className="text-primary underline-offset-4 hover:underline">
+              Sign up
+            </Link>
+          </p>
+        </div>
+      )}
+
+      {type === 'signup' && (
+        <div className="text-sm text-center">
+          <p className="text-muted-foreground">
+            Already have an account?{' '}
+            <Link href="/auth/login" className="text-primary underline-offset-4 hover:underline">
+              Login
+            </Link>
+          </p>
+        </div>
+      )}
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">

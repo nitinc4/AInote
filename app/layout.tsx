@@ -7,6 +7,7 @@ import { Navbar } from '@/components/layout/navbar'
 import { Toaster } from '@/components/ui/toaster'
 import { AuthProvider } from '@/hooks/useAuth'
 import { QueryProvider } from '@/lib/providers/query-provider'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,11 +27,13 @@ export default function RootLayout({
         <ThemeProvider>
           <QueryProvider>
             <AuthProvider>
-              <Navbar />
-              <main className="min-h-[calc(100vh-4rem)]">
-                {children}
-              </main>
-              <Toaster />
+              <TooltipProvider>
+                <Navbar />
+                <main className="min-h-[calc(100vh-4rem)]">
+                  {children}
+                </main>
+                <Toaster />
+              </TooltipProvider>
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>
