@@ -103,20 +103,6 @@ Visit [http://localhost:3000](http://localhost:3000) to open the app in your bro
 - [ ] Mobile PWA support  
 - [ ] Offline mode  
 
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repo and submit a pull request.  
-If you find any bugs or have feature suggestions, feel free to open an issue.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
 
 ## 🙌 Acknowledgements
 
