@@ -26,6 +26,7 @@ export function Navbar() {
   }
   
   const isAuthenticated = !!user
+  const homeLink = isAuthenticated ? '/dashboard' : '/'
   const navItems = isAuthenticated
     ? [
         { label: 'Dashboard', href: '/dashboard' },
@@ -41,7 +42,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href={homeLink} className="flex items-center gap-2">
             <Pen className="h-6 w-6" />
             <span className="font-semibold">SmartNotes</span>
           </Link>
