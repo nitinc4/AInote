@@ -35,3 +35,4 @@ yarn-error.log*
 next-env.d.ts
 .env
 fine-citadel-457514-m2-f1cac54bca68.json
+supabase/functions/summarize/config.toml
