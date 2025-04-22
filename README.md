@@ -27,7 +27,7 @@ Transform the way you capture and organize your thoughts with **AInote**, an AI-
 
 ## 📸 Preview
 
-![AInote Screenshot](public/screenshots/landing-preview.png)
+![AInote Screenshot](public/screenshots/image.png)
 
 > **Smart Notes for Smart Thinkers** – A modern solution for organized, efficient, and AI-augmented note-taking.
 
