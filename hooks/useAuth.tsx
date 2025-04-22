@@ -10,7 +10,7 @@ type AuthContextType = {
   loading: boolean
   signUp: (email: string, password: string) => Promise<void>
   signIn: (email: string, password: string) => Promise<{ error?: { message: string, code?: string } }>
-  signInWithGoogle: () => Promise<void>
+  signInWithGoogle: () => Promise<{ error?: { message: string, code?: string } }>
   signOut: () => Promise<void>
 }
 
@@ -77,20 +77,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const signInWithGoogle = async () => {
-    setLoading(true)
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       })
-      if (error) throw error
+      if (error) {
+        return { error: {
+          message: error.message,
+          code: error.code
+        }}
+      }
+      return {}
     } catch (error) {
       console.error('Error signing in with Google:', error)
-      throw error
-    } finally {
-      setLoading(false)
+      return { error: {
+        message: 'Failed to sign in with Google',
+        code: 'google_signin_error'
+      }}
     }
   }
 

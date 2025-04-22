@@ -131,8 +131,8 @@ export const useSummarizeNote = () => {
         throw new Error(error.message || 'Failed to summarize note')
       }
       
-      const data = await response.json()
-      return data.summary as string
+      const { summary } = await response.json()
+      return summary as string
     }
   })
 }

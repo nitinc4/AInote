@@ -1,0 +1,5 @@
+[functions.summarize]
+env_vars = [
+  { name = "GOOGLE_CLOUD_PROJECT_ID", value = "fine-citadel-457514-m2" },
+  { name = "GOOGLE_CLOUD_KEY", value = "AIzaSyCvFKBKaTc7rS58cNyjam2RD-t4T5xOUdU" }
+]
